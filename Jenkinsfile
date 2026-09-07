@@ -2,33 +2,37 @@ pipeline {
 
     agent any
 
-   *stages {
+    stages {
 
-        stage('Checkout'* {
+        stage('Checkout') {
             steps {
-           *    checkout scm
+                checkout scm
             }
-   *    }
+        }
 
         stage('Build') {
-  *         steps {
-                s* 'mvn clean package'
-            }*        }
-
-        stage('Build Do*ker Image') {
             steps {
-*               sh 'docker build -t*springboot-demo:${BUILD_NUMBER} .'*            }
+                sh 'mvn clean package'
+            }
         }
+
+        stage('Build Docker Image') {
+            steps {
+                sh 'docker build -t springboot-demo:${BUILD_NUMBER} .'
+            }
+        }
+
     }
 
-   *post {
+    post {
 
         success {
-        *   echo 'Build Successful'
-       *}
+            echo 'Build Successful'
+        }
 
         failure {
-            e*ho 'Build Failed'
+            echo 'Build Failed'
         }
+
     }
-*
+}
