@@ -2,6 +2,10 @@ pipeline {
 
     agent any
 
+    tools {
+            maven 'Maven-3.9'
+    }
+
     stages {
 
         stage('Checkout') {
@@ -12,10 +16,10 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'chmod +x mvnw'
-                sh './mvnw clean package'
+                sh 'mvn clean package'
             }
         }
+
 
         stage('Build Docker Image') {
             steps {
